@@ -1,6 +1,8 @@
 package imani.citibike;
 
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class CitibikeServiceTest {
@@ -17,9 +19,9 @@ public class CitibikeServiceTest {
         Station station = stations.data.stations.get(0);
         assertNotNull(station.name);
         assertNotNull(station.station_id);
-        assertNotNull(station.lon);
-        assertNotNull(station.lat);
-        assertNotNull(station.capacity);
+        assertNotEquals(0.0, station.lon);
+        assertNotEquals(0.0, station.lat);
+        assertNotEquals(0.0, station.capacity);
     }
 
     @Test
@@ -34,8 +36,8 @@ public class CitibikeServiceTest {
         //then
         StationStatus stationStatus = stationStatuses.data.stations.get(0);
         assertNotNull(stationStatus.station_id);
-        assertNotNull(stationStatus.num_bikes_available);
-        assertNotNull(stationStatus.num_docks_available);
+        assertNotEquals(0.0, stationStatus.num_bikes_available);
+        assertNotEquals(0.0, stationStatus.num_docks_available);
 
 
     }
