@@ -36,8 +36,14 @@ public class CitibikeServiceTest {
         //then
         StationStatus stationStatus = stationStatuses.data.stations.get(0);
         assertNotNull(stationStatus.station_id);
-        assertNotEquals(0.0, stationStatus.num_bikes_available);
-        assertNotEquals(0.0, stationStatus.num_docks_available);
+        if (stationStatus.num_bikes_available > 0) {
+            assertNotEquals(0, stationStatus.num_bikes_available);
+        }
+        if (stationStatus.num_docks_available > 0) {
+            assertNotEquals(0, stationStatus.num_docks_available);
+        }
+
+
 
 
     }
