@@ -1,8 +1,11 @@
 package imani.citibike;
 
 public class Station {
-    public int id;
-    public String stationName;
-    public double lon;
     public double lat;
+    public double lon;
+    //CHECKSTYLE:OFF
+    public String station_id;
+    //CHECKSTYLE:ON
+    public String name;
+    int capacity;
 }

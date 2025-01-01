@@ -1,5 +1,5 @@
 package imani.citibike;
 
 public class Stations {
-    public Station[] stations;
+    public DataStations data;
 }
