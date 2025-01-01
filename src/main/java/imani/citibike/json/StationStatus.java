@@ -1,4 +1,4 @@
-package imani.citibike;
+package imani.citibike.json;
 
 public class StationStatus {
     //CHECKSTYLE:OFF

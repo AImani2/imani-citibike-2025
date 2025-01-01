@@ -1,5 +1,9 @@
 package imani.citibike;
 
+import imani.citibike.json.Stations;
+import imani.citibike.service.CitibikeService;
+import imani.citibike.service.CitibikeServiceFactory;
+
 public class Main {
     public static void main(String[] args) {
 

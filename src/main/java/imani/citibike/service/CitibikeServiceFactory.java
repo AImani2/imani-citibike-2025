@@ -1,4 +1,4 @@
-package imani.citibike;
+package imani.citibike.service;
 
 
 import retrofit2.Retrofit;

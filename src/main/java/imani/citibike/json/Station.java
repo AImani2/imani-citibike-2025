@@ -1,4 +1,4 @@
-package imani.citibike;
+package imani.citibike.json;
 
 public class Station {
     public double lat;
@@ -7,5 +7,5 @@ public class Station {
     public String station_id;
     //CHECKSTYLE:ON
     public String name;
-    int capacity;
+    public int capacity;
 }
