@@ -7,9 +7,5 @@ public class Station {
     public String station_id;
     //CHECKSTYLE:ON
     public String name;
-
-    //CHECKSTYLE:OFF
-    public int num_docks_available;
-    public int num_bikes_available;
-    //CHECKSTYLE:ON
+    int capacity;
 }

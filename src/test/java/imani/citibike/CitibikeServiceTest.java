@@ -14,11 +14,12 @@ public class CitibikeServiceTest {
         Stations stations = citibikeService.getStationInfoResponse().blockingGet();
 
         //then
-        Station station = stations.stations[0];
+        Station station = stations.data.stations.get(0);
         assertNotNull(station.name);
         assertNotNull(station.station_id);
         assertNotNull(station.lon);
         assertNotNull(station.lat);
+        assertNotNull(station.capacity);
     }
 
     @Test
@@ -27,13 +28,16 @@ public class CitibikeServiceTest {
         CitibikeService citibikeService = new CitibikeServiceFactory().getService();
 
         //when
-        Stations stations = citibikeService.getStationStatusResponse().blockingGet();
-        System.out.println("Response: " + stations);
+        StationStatuses stationStatuses = citibikeService.getStationStatusResponse().blockingGet();
+
 
         //then
-        Station station = stations.stations[0];
-        assertNotNull(station.num_docks_available);
-        assertNotNull(station.num_bikes_available);
+        StationStatus stationStatus = stationStatuses.data.stations.get(0);
+        assertNotNull(stationStatus.station_id);
+        assertNotNull(stationStatus.num_bikes_available);
+        assertNotNull(stationStatus.num_docks_available);
+
+
     }
 
     @Test

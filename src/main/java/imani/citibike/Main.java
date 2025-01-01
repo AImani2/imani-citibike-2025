@@ -19,5 +19,9 @@ public class Main {
         // service interface
         // service factory
         // citibike service test
+
+
+        // use records
+
     }
 }

@@ -10,7 +10,7 @@ public interface CitibikeService {
     );
 
     @GET("station_status.json")
-    Single<Stations> getStationStatusResponse(
+    Single<StationStatuses> getStationStatusResponse(
     );
 }
 
