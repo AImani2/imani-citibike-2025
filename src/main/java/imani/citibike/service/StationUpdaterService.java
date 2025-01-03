@@ -2,7 +2,6 @@ package imani.citibike.service;
 
 import imani.citibike.json.Station;
 import imani.citibike.json.StationStatus;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
 import java.util.ArrayList;
 import java.util.List;
