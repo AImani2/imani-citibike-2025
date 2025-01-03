@@ -4,22 +4,15 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.google.gson.Gson;
-import imani.citibike.json.DataStations;
 import imani.citibike.json.Station;
 import imani.citibike.json.StationLocator;
-import imani.citibike.json.StationStatus;
 import imani.citibike.service.CitibikeService;
 import imani.citibike.service.CitibikeServiceFactory;
 import imani.citibike.service.StationUpdaterService;
-import io.reactivex.rxjava3.schedulers.Schedulers;
+
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
-import static imani.citibike.json.StationLocator.findClosestStation;
 
 public class CitibikeRequestHandler
         implements RequestHandler<APIGatewayProxyRequestEvent, CitibikeRequestHandler.CitiBikeResponse> {
@@ -39,13 +32,14 @@ public class CitibikeRequestHandler
         StationUpdaterService sus = new StationUpdaterService(citibikeService);
         sus.updateStationListWithStatus(stationList);
 
-        Station startStation = findClosestStation(
+        StationLocator stationLocator = new StationLocator(sus);
+        Station startStation = stationLocator.findClosestStation(
                 request.from.lon,
                 request.from.lat,
                 true
         );
 
-        Station endStation = findClosestStation(
+        Station endStation = stationLocator.findClosestStation(
                 request.to.lon,
                 request.to.lat,
                 false
