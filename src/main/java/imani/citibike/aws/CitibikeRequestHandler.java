@@ -59,9 +59,5 @@ public class CitibikeRequestHandler
 
     public record Location(double lat, double lon) {}
 
-    public record CitiBikeResponse(Location from, Station start, Station end, Location to) {
-        public CitiBikeResponse(String message) {
-            this(null, null, null, null);
-        }
-    }
+    public record CitiBikeResponse(Location from, Station start, Station end, Location to) {}
 }

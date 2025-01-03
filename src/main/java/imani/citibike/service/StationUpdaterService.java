@@ -16,11 +16,9 @@ public class StationUpdaterService {
 
     public void updateStationListWithStatus(ArrayList<Station> stationList) {
         var stationInfoResponse = citibikeService.getStationInfoResponse()
-                .observeOn(Schedulers.io())
                 .blockingGet();
 
         var stationStatusResponse = citibikeService.getStationStatusResponse()
-                .observeOn(Schedulers.io())
                 .blockingGet();
 
         List<StationStatus> statuses = stationStatusResponse.data.stations;
