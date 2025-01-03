@@ -1,4 +1,4 @@
-package imani.citibike;
+package imani.citibike.json;
 
 import imani.citibike.json.Station;
 import imani.citibike.json.StationStatus;

@@ -8,4 +8,6 @@ public class Station {
     //CHECKSTYLE:ON
     public String name;
     public int capacity;
+    public int num_docks_available;
+    public int num_bikes_available;
 }
