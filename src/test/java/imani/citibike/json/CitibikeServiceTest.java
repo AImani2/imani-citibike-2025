@@ -41,13 +41,4 @@ public class CitibikeServiceTest {
 
     }
 
-    @Test
-    public void closestBikePickUp() {
-
-    }
-
-    @Test
-    public void closestBikeDropOff() {
-
-    }
 }
