@@ -6,14 +6,13 @@ import org.jxmapviewer.input.CenterMapListener;
 import org.jxmapviewer.input.PanKeyListener;
 import org.jxmapviewer.input.PanMouseInputListener;
 import org.jxmapviewer.input.ZoomMouseWheelListenerCursor;
-import org.jxmapviewer.viewer.DefaultTileFactory;
-import org.jxmapviewer.viewer.GeoPosition;
-import org.jxmapviewer.viewer.TileFactoryInfo;
-
+import org.jxmapviewer.painter.CompoundPainter;
+import org.jxmapviewer.viewer.*;
+import org.jxmapviewer.painter.Painter;
 import javax.swing.*;
 import javax.swing.event.MouseInputListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+import java.awt.geom.Point2D;
+import java.util.List;
 
 public class CitibikeComponent extends JComponent {
     private final JXMapViewer mapViewer;
@@ -37,6 +36,8 @@ public class CitibikeComponent extends JComponent {
         mapViewer.addMouseListener(new CenterMapListener(mapViewer));
         mapViewer.addMouseWheelListener(new ZoomMouseWheelListenerCursor(mapViewer));
         mapViewer.addKeyListener(new PanKeyListener(mapViewer));
+
+
 
         /*mapViewer.addPropertyChangeListener("zoom", new PropertyChangeListener()
         {
@@ -68,5 +69,20 @@ public class CitibikeComponent extends JComponent {
 //        frame.setTitle(String.format("JXMapviewer2 Example 3 (%.2f / %.2f) - Zoom: %d", lat, lon, zoom));
 //    }
 
+    }
+
+    // what does this do?
+    public void drawRoutes(RoutePainter routePainter, WaypointPainter<Waypoint> waypointPainter) {
+        List<Painter<JXMapViewer>> painters = List.of(routePainter, waypointPainter);
+        CompoundPainter<JXMapViewer> compoundPainter = new CompoundPainter<>(painters);
+        mapViewer.setOverlayPainter(compoundPainter);
+    }
+
+//    public GeoPosition convertPointToGeoPosition(Point2D.Double point) {
+//
+//    }
+
+    public JXMapViewer getMapViewer() {
+        return mapViewer;
     }
 }

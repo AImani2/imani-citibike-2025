@@ -5,4 +5,12 @@ public class CitibikeController {
     * in this class i would like to have controllers for:
     * 1. when you click on two places on the map
     * 2. when i click on the buttons on the bottom */
+    private final CitibikeComponent citibikeComponent;
+
+    public CitibikeController(CitibikeComponent citibikeComponent) {
+        this.citibikeComponent = citibikeComponent;
+    }
+
+    // make a list of the classes I want here
+
 }

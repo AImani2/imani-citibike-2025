@@ -1,12 +1,13 @@
 package imani.citibike.map;
 
-import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.viewer.Waypoint;
 import org.jxmapviewer.viewer.WaypointPainter;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class CitibikeFrame extends JFrame {
 
@@ -49,8 +50,42 @@ public class CitibikeFrame extends JFrame {
         coordPanel.add(fromLabel);
         add(coordPanel, BorderLayout.NORTH);
 
-        // now I have to add my mouse listener to the map
+        // this gets the x and y which the user clicked on.
+        // I need to store those points as to and from coordinates
+        // these are stored in the controller?
+        // how to decide if they are to and from?
+        mapViewer.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int x = e.getX();
+                int y = e.getY();
+//                Point2D.Double point = new Point2D.Double(x, y);
+//                GeoPosition position = mapViewer.convertPointToGeoPosition(point);
+                // call the controller here
+            }
+        });
+
+
+        /*mapViewer.getMapViewer().zoomToBestFit(
+                Set.of(from, startStation, endStation, to), //these r GeoPositions
+                1.0
+        );*/
+
         // and i have to add my action listeners to the buttons
-        // i call my controller from this class
+        // when the user hits map that is when the controller calls findClosestStation
+        // map also has to call draw routes which allows me to draw the routes for the user knowing the closest station info
+        mapButton.addActionListener(e -> {
+            //controller
+            repaint();
+        });
+
+        // clear resets any stored variables
+        clearButton.addActionListener(e -> {
+            //controller
+            repaint();
+        });
+
     }
+
+
 }
