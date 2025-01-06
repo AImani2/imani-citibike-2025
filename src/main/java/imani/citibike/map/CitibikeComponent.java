@@ -12,6 +12,8 @@ import org.jxmapviewer.viewer.TileFactoryInfo;
 
 import javax.swing.*;
 import javax.swing.event.MouseInputListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 public class CitibikeComponent extends JComponent {
     private final JXMapViewer mapViewer;
@@ -35,6 +37,36 @@ public class CitibikeComponent extends JComponent {
         mapViewer.addMouseListener(new CenterMapListener(mapViewer));
         mapViewer.addMouseWheelListener(new ZoomMouseWheelListenerCursor(mapViewer));
         mapViewer.addKeyListener(new PanKeyListener(mapViewer));
+
+        /*mapViewer.addPropertyChangeListener("zoom", new PropertyChangeListener()
+        {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt)
+            {
+                updateWindowTitle(frame, mapViewer);
+            }
+        });
+
+        mapViewer.addPropertyChangeListener("center", new PropertyChangeListener()
+        {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt)
+            {
+                updateWindowTitle(frame, mapViewer);
+            }
+        });
+
+        updateWindowTitle(frame, mapViewer);
+    }*/
+
+//    protected static void updateWindowTitle(JFrame frame, JXMapViewer mapViewer)
+//    {
+//        double lat = mapViewer.getCenterPosition().getLatitude();
+//        double lon = mapViewer.getCenterPosition().getLongitude();
+//        int zoom = mapViewer.getZoom();
+//
+//        frame.setTitle(String.format("JXMapviewer2 Example 3 (%.2f / %.2f) - Zoom: %d", lat, lon, zoom));
+//    }
 
     }
 }
