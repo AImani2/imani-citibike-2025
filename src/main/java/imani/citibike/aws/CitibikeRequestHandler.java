@@ -36,13 +36,15 @@ public class CitibikeRequestHandler
         Station startStation = stationLocator.findClosestStation(
                 request.from.lon,
                 request.from.lat,
-                true
+                true,
+                sus
         );
 
         Station endStation = stationLocator.findClosestStation(
                 request.to.lon,
                 request.to.lat,
-                false
+                false,
+                sus
         );
 
         return new CitiBikeResponse(request.from, startStation, endStation, request.to);
