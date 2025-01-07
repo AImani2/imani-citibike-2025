@@ -32,7 +32,7 @@ public class CitibikeFrame extends JFrame {
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
-        getContentPane().add(mapViewer); //add(mapViewer, BorderLayout.CENTER);
+        getContentPane().add(mapViewer, BorderLayout.CENTER);
 
         JPanel buttonPanel = new JPanel();
 
@@ -60,7 +60,7 @@ public class CitibikeFrame extends JFrame {
         coordPanel.add(fromLabel);
         add(coordPanel, BorderLayout.NORTH);
 
-        mapViewer.addMouseListener(new MouseAdapter() {
+        mapViewer.getMapViewer().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 int x = e.getX();
@@ -91,7 +91,7 @@ public class CitibikeFrame extends JFrame {
                                 toPosition),
                         1.0
                 );
-                repaint();
+                mapViewer.getMapViewer().repaint();
             } else {
                 JOptionPane.showMessageDialog(null, "Please select both 'To' and 'From' points.");
             }
@@ -104,7 +104,7 @@ public class CitibikeFrame extends JFrame {
             toLabel.setText("To: ");
             fromLabel.setText("From: ");
             controller.clearPoints();
-            repaint();
+            mapViewer.getMapViewer().repaint();
         });
 
     }

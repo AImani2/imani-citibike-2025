@@ -11,6 +11,7 @@ import org.jxmapviewer.viewer.*;
 import org.jxmapviewer.painter.Painter;
 import javax.swing.*;
 import javax.swing.event.MouseInputListener;
+import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
@@ -24,10 +25,8 @@ public class CitibikeComponent extends JComponent {
         mapViewer.setTileFactory(tileFactory);
 
         tileFactory.setThreadPoolSize(8);
-
-        GeoPosition nyc = new GeoPosition(40, 73);
-
         mapViewer.setZoom(7);
+        GeoPosition nyc = new GeoPosition(40.77228687788679, -73.9842939376831);
         mapViewer.setAddressLocation(nyc);
 
         MouseInputListener mia = new PanMouseInputListener(mapViewer);
@@ -37,6 +36,15 @@ public class CitibikeComponent extends JComponent {
         mapViewer.addMouseWheelListener(new ZoomMouseWheelListenerCursor(mapViewer));
         mapViewer.addKeyListener(new PanKeyListener(mapViewer));
 
+        setLayout(new BorderLayout());
+        add(mapViewer, BorderLayout.CENTER);
+
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g); // Ensure that any other painting logic from JComponent is executed first
+        mapViewer.paint(g); // This will render the map using the Graphics object
     }
 
     // what does this do?
