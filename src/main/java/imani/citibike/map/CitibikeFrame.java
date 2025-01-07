@@ -1,5 +1,7 @@
 package imani.citibike.map;
 
+import imani.citibike.json.Station;
+import org.jxmapviewer.viewer.GeoPosition;
 import org.jxmapviewer.viewer.Waypoint;
 import org.jxmapviewer.viewer.WaypointPainter;
 
@@ -8,15 +10,23 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Point2D;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class CitibikeFrame extends JFrame {
 
     private final CitibikeController controller;
+    private boolean isToPoint = true;
+    private GeoPosition toPosition;
+    private GeoPosition fromPosition;
+    private ArrayList<Station> resultStations = new ArrayList<>();
     public CitibikeFrame() {
         RoutePainter routePainter = new RoutePainter();
         WaypointPainter<Waypoint> waypointPainter = new WaypointPainter<>();
         CitibikeComponent mapViewer = new CitibikeComponent();
-        controller = new CitibikeController();
+        controller = new CitibikeController(mapViewer);
 
         setTitle("Citibike Map");
         setSize(800, 600);
@@ -50,38 +60,50 @@ public class CitibikeFrame extends JFrame {
         coordPanel.add(fromLabel);
         add(coordPanel, BorderLayout.NORTH);
 
-        // this gets the x and y which the user clicked on.
-        // I need to store those points as to and from coordinates
-        // these are stored in the controller?
-        // how to decide if they are to and from?
         mapViewer.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 int x = e.getX();
                 int y = e.getY();
-//                Point2D.Double point = new Point2D.Double(x, y);
-//                GeoPosition position = mapViewer.convertPointToGeoPosition(point);
-                // call the controller here
+                Point2D.Double point = new Point2D.Double(x, y);
+                GeoPosition position = mapViewer.getMapViewer().convertPointToGeoPosition(point);
+                if (isToPoint) {
+                    toPosition = position;
+                    toLabel.setText("To: " + position);
+                } else {
+                    fromPosition = position;
+                    fromLabel.setText("From: " + position);
+                }
+
+                isToPoint = !isToPoint;
+                controller.setPoints(toPosition, fromPosition);
             }
         });
 
-
-        /*mapViewer.getMapViewer().zoomToBestFit(
-                Set.of(from, startStation, endStation, to), //these r GeoPositions
-                1.0
-        );*/
-
-        // and i have to add my action listeners to the buttons
-        // when the user hits map that is when the controller calls findClosestStation
-        // map also has to call draw routes which allows me to draw the routes for the user knowing the closest station info
         mapButton.addActionListener(e -> {
-            //controller
-            repaint();
+            if (toPosition != null && fromPosition != null) {
+                resultStations = controller.findClosestStations();
+                mapViewer.drawRoutes(routePainter, waypointPainter);
+                mapViewer.getMapViewer().zoomToBestFit(
+                        Set.of(fromPosition,
+                                controller.getStationGeoPosition(resultStations.get(0)),
+                                controller.getStationGeoPosition(resultStations.get(1)),
+                                toPosition),
+                        1.0
+                );
+                repaint();
+            } else {
+                JOptionPane.showMessageDialog(null, "Please select both 'To' and 'From' points.");
+            }
         });
 
         // clear resets any stored variables
         clearButton.addActionListener(e -> {
-            //controller
+            toPosition = null;
+            fromPosition = null;
+            toLabel.setText("To: ");
+            fromLabel.setText("From: ");
+            controller.clearPoints();
             repaint();
         });
 

@@ -11,12 +11,12 @@ import org.jxmapviewer.viewer.*;
 import org.jxmapviewer.painter.Painter;
 import javax.swing.*;
 import javax.swing.event.MouseInputListener;
-import java.awt.geom.Point2D;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.List;
 
 public class CitibikeComponent extends JComponent {
     private final JXMapViewer mapViewer;
-
     public CitibikeComponent() {
         mapViewer = new JXMapViewer();
         TileFactoryInfo info = new OSMTileFactoryInfo();
@@ -37,38 +37,6 @@ public class CitibikeComponent extends JComponent {
         mapViewer.addMouseWheelListener(new ZoomMouseWheelListenerCursor(mapViewer));
         mapViewer.addKeyListener(new PanKeyListener(mapViewer));
 
-
-
-        /*mapViewer.addPropertyChangeListener("zoom", new PropertyChangeListener()
-        {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt)
-            {
-                updateWindowTitle(frame, mapViewer);
-            }
-        });
-
-        mapViewer.addPropertyChangeListener("center", new PropertyChangeListener()
-        {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt)
-            {
-                updateWindowTitle(frame, mapViewer);
-            }
-        });
-
-        updateWindowTitle(frame, mapViewer);
-    }*/
-
-//    protected static void updateWindowTitle(JFrame frame, JXMapViewer mapViewer)
-//    {
-//        double lat = mapViewer.getCenterPosition().getLatitude();
-//        double lon = mapViewer.getCenterPosition().getLongitude();
-//        int zoom = mapViewer.getZoom();
-//
-//        frame.setTitle(String.format("JXMapviewer2 Example 3 (%.2f / %.2f) - Zoom: %d", lat, lon, zoom));
-//    }
-
     }
 
     // what does this do?
@@ -77,10 +45,6 @@ public class CitibikeComponent extends JComponent {
         CompoundPainter<JXMapViewer> compoundPainter = new CompoundPainter<>(painters);
         mapViewer.setOverlayPainter(compoundPainter);
     }
-
-//    public GeoPosition convertPointToGeoPosition(Point2D.Double point) {
-//
-//    }
 
     public JXMapViewer getMapViewer() {
         return mapViewer;
