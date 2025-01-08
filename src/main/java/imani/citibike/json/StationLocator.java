@@ -9,7 +9,8 @@ import java.util.ArrayList;
 public class StationLocator {
     private ArrayList<Station> stationList = new ArrayList<>();
 
-    private CitibikeService citibikeService = new CitibikeServiceFactory().getService();;
+    private CitibikeService citibikeService
+            = new CitibikeServiceFactory().getService();
     private StationUpdaterService stationUpdaterService;
 
     public StationLocator(StationUpdaterService stationUpdaterService, CitibikeService citibikeService) {
