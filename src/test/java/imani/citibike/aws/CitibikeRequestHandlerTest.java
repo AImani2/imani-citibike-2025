@@ -1,19 +1,11 @@
 package imani.citibike.aws;
 
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
-import imani.citibike.json.Station;
-import imani.citibike.json.StationLocator;
-import imani.citibike.service.StationUpdaterService;
 import org.junit.jupiter.api.Test;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import com.amazonaws.services.lambda.runtime.Context;
 import static org.junit.jupiter.api.Assertions.*;
-
-        import static org.mockito.Mockito.mock;
-        import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class CitibikeRequestHandlerTest {
 

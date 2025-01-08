@@ -104,6 +104,7 @@ public class CitibikeFrame extends JFrame {
             toLabel.setText("To: ");
             fromLabel.setText("From: ");
             controller.clearPoints();
+            mapViewer.getMapViewer().setOverlayPainter(null);
             mapViewer.getMapViewer().repaint();
         });
 

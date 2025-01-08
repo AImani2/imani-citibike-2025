@@ -43,8 +43,8 @@ public class CitibikeComponent extends JComponent {
 
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g); // Ensure that any other painting logic from JComponent is executed first
-        mapViewer.paint(g); // This will render the map using the Graphics object
+        super.paintComponent(g);
+        mapViewer.paint(g);
     }
 
     // what does this do?
