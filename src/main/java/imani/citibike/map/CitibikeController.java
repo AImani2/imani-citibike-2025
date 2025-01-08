@@ -38,8 +38,8 @@ public class CitibikeController {
 
     public ArrayList<Station> findClosestStations() {
 
-        endStation = stationLocator.findClosestStation(toPoint.getLongitude(), toPoint.getLatitude(), false);
-        startStation = stationLocator.findClosestStation(fromPoint.getLongitude(), fromPoint.getLatitude(), true);
+        endStation = stationLocator.findClosestStation(toPoint.getLongitude(), toPoint.getLatitude(), false, sus);
+        startStation = stationLocator.findClosestStation(fromPoint.getLongitude(), fromPoint.getLatitude(), true, sus);
         resultStations.set(0, startStation);
         resultStations.set(1, endStation);
         return resultStations;

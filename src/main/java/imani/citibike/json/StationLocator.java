@@ -14,14 +14,13 @@ public class StationLocator {
     public StationLocator(StationUpdaterService stationUpdaterService, CitibikeService citibikeService) {
         this.stationUpdaterService = stationUpdaterService;
         this.citibikeService = citibikeService;
-
     }
 
-    public Station findClosestStation(double lon, double lat, boolean isBikeSearch) {
+    public Station findClosestStation(double lon, double lat, boolean isBikeSearch, StationUpdaterService sus) {
         Station closestStation = null;
         double minDistance = Double.MAX_VALUE;
 
-        stationUpdaterService.updateStationListWithStatus(stationList);
+        sus.updateStationListWithStatus(stationList);
 
         for (Station station : stationList) {
             double currDistance = Math.sqrt((lat - station.lat) * (lat - station.lat))
