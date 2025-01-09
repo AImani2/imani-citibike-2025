@@ -2,15 +2,10 @@ package imani.citibike.map;
 
 import hu.akarnokd.rxjava3.swing.SwingSchedulers;
 import imani.citibike.aws.CitibikeRequestHandler;
-import imani.citibike.json.Station;
-import imani.citibike.json.StationLocator;
 import imani.citibike.service.*;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import org.jxmapviewer.viewer.GeoPosition;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class CitibikeController {
     private CitibikeComponent citibikeComponent; // can i take this out or i need to update my view from here?

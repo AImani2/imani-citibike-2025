@@ -1,5 +1,9 @@
-package imani.citibike.json;
+package imani.citibike.service;
 
+import imani.citibike.json.Station;
+import imani.citibike.json.StationStatus;
+import imani.citibike.json.StationStatuses;
+import imani.citibike.json.Stations;
 import imani.citibike.service.CitibikeService;
 import imani.citibike.service.CitibikeServiceFactory;
 import org.junit.jupiter.api.Test;
