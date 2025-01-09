@@ -62,13 +62,13 @@ public class CitibikeComponent extends JComponent {
         mapViewer.setOverlayPainter(compoundPainter);
     }
 
-    public void drawRoutes(GeoPosition start, GeoPosition end, GeoPosition startStation, GeoPosition endStation) {
+    public void drawRoutes(GeoPosition start, GeoPosition startStation, GeoPosition endStation, GeoPosition end) {
 
         waypoints = generateWaypoints(
                 start,
-                end,
                 startStation,
-                endStation
+                endStation,
+                end
         );
 
         wayPointLocations.clear();
@@ -84,7 +84,7 @@ public class CitibikeComponent extends JComponent {
     }
 
     private Set<Waypoint> generateWaypoints(
-            GeoPosition start, GeoPosition end, GeoPosition startStation, GeoPosition endStation) {
+        GeoPosition start, GeoPosition startStation, GeoPosition endStation, GeoPosition end) {
         Set<Waypoint> waypoints = new HashSet<>();
 
         if (start != null) {
@@ -103,9 +103,9 @@ public class CitibikeComponent extends JComponent {
         return waypoints;
     }
 
-    public void updateWayPoints(GeoPosition start, GeoPosition end, GeoPosition startStation, GeoPosition endStation) {
+    public void updateWayPoints(GeoPosition start, GeoPosition startStation, GeoPosition endStation, GeoPosition end) {
 
-        waypointPainter.setWaypoints(generateWaypoints(start, end, startStation, endStation));
+        waypointPainter.setWaypoints(generateWaypoints(start, startStation, endStation, end));
         combinePainters(routePainter, waypointPainter);
     }
 

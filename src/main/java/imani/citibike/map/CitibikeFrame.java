@@ -1,8 +1,6 @@
 package imani.citibike.map;
 
-import imani.citibike.json.Station;
 import org.jxmapviewer.viewer.GeoPosition;
-
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
@@ -14,7 +12,7 @@ import java.util.Set;
 public class CitibikeFrame extends JFrame {
 
     private final CitibikeController controller;
-    private boolean isToPoint = true;
+    private boolean isToPoint = false;
     private GeoPosition toPosition;
     private GeoPosition fromPosition;
 
@@ -42,18 +40,18 @@ public class CitibikeFrame extends JFrame {
         JPanel coordPanel = new JPanel();
         coordPanel.setLayout(new GridLayout(0, 1));
 
-        JLabel toLabel = new JLabel("To: ");
-        toLabel.setBorder(new LineBorder(Color.BLACK));
-        toLabel.setBackground(Color.WHITE);
-        toLabel.setOpaque(true);
-        coordPanel.add(toLabel);
-
         JLabel fromLabel = new JLabel("From: ");
         fromLabel.setBorder(new LineBorder(Color.BLACK));
         fromLabel.setBackground(Color.WHITE);
         fromLabel.setOpaque(true);
         coordPanel.add(fromLabel);
         add(coordPanel, BorderLayout.NORTH);
+
+        JLabel toLabel = new JLabel("To: ");
+        toLabel.setBorder(new LineBorder(Color.BLACK));
+        toLabel.setBackground(Color.WHITE);
+        toLabel.setOpaque(true);
+        coordPanel.add(toLabel);
 
         mapViewer.getMapViewer().addMouseListener(new MouseAdapter() {
             @Override
@@ -73,10 +71,10 @@ public class CitibikeFrame extends JFrame {
                 isToPoint = !isToPoint;
                 controller.setPoints(toPosition, fromPosition);
                 mapViewer.updateWayPoints(
-                        toPosition,
                         fromPosition,
                         controller.getStartStation(),
-                        controller.getEndStation());
+                        controller.getEndStation(),
+                        toPosition);
                 mapViewer.getMapViewer().repaint();
             }
         });
@@ -86,10 +84,10 @@ public class CitibikeFrame extends JFrame {
                 controller.findClosestStations();
 
                 mapViewer.drawRoutes(
-                        toPosition,
                         fromPosition,
                         controller.getStartStation(),
-                        controller.getEndStation());
+                        controller.getEndStation(),
+                        toPosition);
 
                 mapViewer.getMapViewer().zoomToBestFit(
                         Set.of(fromPosition,
@@ -112,11 +110,13 @@ public class CitibikeFrame extends JFrame {
             toLabel.setText("To: ");
             fromLabel.setText("From: ");
             controller.clearPoints();
+            isToPoint = false;
+
             mapViewer.updateWayPoints(
                     toPosition,
-                    fromPosition,
                     controller.getStartStation(),
-                    controller.getEndStation());
+                    controller.getEndStation(),
+                    fromPosition);
             mapViewer.getMapViewer().setOverlayPainter(null);
             mapViewer.getMapViewer().repaint();
         });
