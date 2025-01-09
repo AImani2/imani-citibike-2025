@@ -2,6 +2,8 @@ package imani.citibike.json;
 
 import com.google.gson.Gson;
 import imani.citibike.aws.CitibikeRequestHandler;
+import imani.citibike.service.CitibikeService;
+import imani.citibike.service.CitibikeServiceFactory;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.GetObjectRequest;
@@ -17,37 +19,44 @@ import java.time.Instant;
 
 public class StationsCache {
 
-    S3Client s3Client = S3Client.create();
+    S3Client s3Client;
     private Instant lastModified;
     private final Gson gson = new Gson();
     private final String BUCKET = "imani.citibike";
     private final String KEY = "request.json";
-    private CitibikeRequestHandler.CitiBikeRequest request;
-    private CitibikeRequestHandler.CitiBikeResponse response;
+    private Stations stations;
+    private final CitibikeService citibikeService;
 
     public StationsCache() {
         Region region = Region.US_EAST_2;
-        S3Client s3Client = S3Client.builder()
+        this.s3Client = S3Client.builder()
                 .region(region)
                 .build();
-
-        PutObjectRequest putObjectRequest = PutObjectRequest.builder()
-                .bucket(BUCKET)
-                .key(KEY)
-                .build();
-
-        String content = gson.toJson(request); //is it null here?
-        s3Client.putObject(putObjectRequest, RequestBody.fromString(content));
-
+        this.citibikeService = new CitibikeServiceFactory().getService();
     }
 
-    public CitibikeRequestHandler.CitiBikeResponse getStations() {
-        return response; // i think it will be null here
+    // proper update
+    public Stations getStations() {
+        boolean moreThanOneHour = getAgeS3();
+        if (!moreThanOneHour && stations != null){
+            return stations;
+        } else if (stations != null && moreThanOneHour) {
+            stations = citibikeService.getStationInfoResponse().blockingGet();
+            lastModified = Instant.now();
+            writeS3();
+
+        } else if (stations == null && !moreThanOneHour) {
+            readS3();
+            // update last modified to last modified from s3
+        } else if (stations == null && moreThanOneHour) {
+            stations = citibikeService.getStationInfoResponse().blockingGet();
+            lastModified = Instant.now();
+            writeS3();
+        }
+        return stations;
     }
 
     public void readS3() {
-
-
         GetObjectRequest getObjectRequest = GetObjectRequest
                 .builder()
                 .bucket(BUCKET)
@@ -55,24 +64,20 @@ public class StationsCache {
                 .build();
 
         InputStream in = s3Client.getObject(getObjectRequest);
-        request = gson.fromJson(new InputStreamReader(in), CitibikeRequestHandler.CitiBikeRequest.class);
+        stations = gson.fromJson(new InputStreamReader(in), Stations.class);
     }
 
     public void writeS3() {
-        Region region = Region.US_EAST_2;
-        S3Client s3Client = S3Client.builder()
-                .region(region)
-                .build();
-
         PutObjectRequest putObjectRequest = PutObjectRequest.builder()
                 .bucket(BUCKET)
                 .key(KEY)
                 .build();
 
-        String content = gson.toJson(request); //is it null here?
+        String content = gson.toJson(stations);
         s3Client.putObject(putObjectRequest, RequestBody.fromString(content));
     }
 
+    // returns true if the object is older than one hour
     public boolean getAgeS3() {
         HeadObjectRequest headObjectRequest = HeadObjectRequest.builder()
                 .bucket(BUCKET)
@@ -89,5 +94,6 @@ public class StationsCache {
         }
     }
 
-
 }
+
+// where and how am I going to call this class?
