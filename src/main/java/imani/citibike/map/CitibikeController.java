@@ -30,14 +30,14 @@ public class CitibikeController {
         fromPoint = null;
     }
 
-    public void findClosestStations() {
+    public void findClosestStations(LambdaService lambdaService) {
 
         fromLocation = new CitibikeRequestHandler.Location(fromPoint.getLatitude(), fromPoint.getLongitude());
         toLocation = new CitibikeRequestHandler.Location(toPoint.getLatitude(), toPoint.getLongitude());
         CitibikeRequestHandler.CitiBikeRequest request
                 = new CitibikeRequestHandler.CitiBikeRequest(fromLocation, toLocation);
 
-        LambdaService lambdaService = new LambdaServiceFactory().getService();
+        lambdaService = new LambdaServiceFactory().getService();
         Disposable disposable = lambdaService.getLambda(request)
                 .subscribeOn(Schedulers.io())
                 .observeOn(SwingSchedulers.edt())

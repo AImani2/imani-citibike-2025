@@ -8,16 +8,16 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class LambdaServiceTest {
 
     @Test
-    public void returnsResponse() {
+    public void getLambda() {
 
         //given
+        LambdaService lambdaService = new LambdaServiceFactory().getService();
         CitibikeRequestHandler.Location fromLocation = new CitibikeRequestHandler.Location(40.8211, -73.9359);
         CitibikeRequestHandler.Location toLocation = new CitibikeRequestHandler.Location(40.7190, -73.9585);
         CitibikeRequestHandler.CitiBikeRequest request
                 = new CitibikeRequestHandler.CitiBikeRequest(fromLocation, toLocation);
 
         //when
-        LambdaService lambdaService = new LambdaServiceFactory().getService();
         CitibikeRequestHandler.CitiBikeResponse response = lambdaService.getLambda(request).blockingGet();
 
         //then

@@ -1,8 +1,6 @@
 package imani.citibike.json;
 
-import imani.citibike.service.CitibikeService;
 import imani.citibike.service.StationUpdaterService;
-
 import java.util.ArrayList;
 
 public class StationLocator {

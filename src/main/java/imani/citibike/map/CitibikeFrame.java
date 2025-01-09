@@ -1,5 +1,7 @@
 package imani.citibike.map;
 
+import imani.citibike.service.LambdaService;
+import imani.citibike.service.LambdaServiceFactory;
 import org.jxmapviewer.viewer.GeoPosition;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -18,6 +20,7 @@ public class CitibikeFrame extends JFrame {
 
     public CitibikeFrame() {
 
+        LambdaService lambdaService = new LambdaServiceFactory().getService();
         CitibikeComponent mapViewer = new CitibikeComponent();
         controller = new CitibikeController(mapViewer);
 
@@ -81,7 +84,7 @@ public class CitibikeFrame extends JFrame {
 
         mapButton.addActionListener(e -> {
             if (toPosition != null && fromPosition != null) {
-                controller.findClosestStations();
+                controller.findClosestStations(lambdaService);
 
                 mapViewer.drawRoutes(
                         fromPosition,
