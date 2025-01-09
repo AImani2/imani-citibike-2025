@@ -14,10 +14,19 @@ import javax.swing.event.MouseInputListener;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class CitibikeComponent extends JComponent {
     private final JXMapViewer mapViewer;
+    private Set<Waypoint> waypoints;
+    private RoutePainter routePainter = new RoutePainter();;
+    private WaypointPainter<Waypoint> waypointPainter = new WaypointPainter<>();
+    private final List<GeoPosition> wayPointLocations = new ArrayList<>();
+
+
     public CitibikeComponent() {
         mapViewer = new JXMapViewer();
         TileFactoryInfo info = new OSMTileFactoryInfo();
@@ -47,14 +56,52 @@ public class CitibikeComponent extends JComponent {
         mapViewer.paint(g);
     }
 
-    // what does this do?
-    public void drawRoutes(RoutePainter routePainter, WaypointPainter<Waypoint> waypointPainter) {
+    public void combinePainters(RoutePainter routePainter, WaypointPainter<Waypoint> waypointPainter) {
         List<Painter<JXMapViewer>> painters = List.of(routePainter, waypointPainter);
         CompoundPainter<JXMapViewer> compoundPainter = new CompoundPainter<>(painters);
         mapViewer.setOverlayPainter(compoundPainter);
     }
 
+    public void drawRoutes(GeoPosition start, GeoPosition end, GeoPosition startStation, GeoPosition endStation) {
+
+        waypoints = generateWaypoints(
+                start,
+                end,
+                startStation,
+                endStation
+        );
+
+        wayPointLocations.clear();
+        wayPointLocations.add(start);
+        wayPointLocations.add(startStation);
+        wayPointLocations.add(endStation);
+        wayPointLocations.add(end);
+
+        routePainter.setTrack(wayPointLocations);
+        waypointPainter.setWaypoints(waypoints);
+
+        combinePainters(routePainter, waypointPainter);
+    }
+
+    private Set<Waypoint> generateWaypoints(GeoPosition start, GeoPosition end, GeoPosition startStation, GeoPosition endStation) {
+        Set<Waypoint> waypoints = new HashSet<>();
+
+        if (start != null) waypoints.add(new DefaultWaypoint(start));
+        if (startStation != null) waypoints.add(new DefaultWaypoint(startStation));
+        if (endStation != null) waypoints.add(new DefaultWaypoint(endStation));
+        if (end != null) waypoints.add(new DefaultWaypoint(end));
+
+        return waypoints;
+    }
+    public void updateWayPoints(GeoPosition start, GeoPosition end, GeoPosition startStation, GeoPosition endStation) {
+
+        waypointPainter.setWaypoints(generateWaypoints(start, end, startStation, endStation));
+        combinePainters(routePainter, waypointPainter);
+    }
+
     public JXMapViewer getMapViewer() {
         return mapViewer;
     }
+
+
 }

@@ -2,8 +2,6 @@ package imani.citibike.map;
 
 import imani.citibike.json.Station;
 import org.jxmapviewer.viewer.GeoPosition;
-import org.jxmapviewer.viewer.Waypoint;
-import org.jxmapviewer.viewer.WaypointPainter;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -11,8 +9,6 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Set;
 
 public class CitibikeFrame extends JFrame {
@@ -21,10 +17,8 @@ public class CitibikeFrame extends JFrame {
     private boolean isToPoint = true;
     private GeoPosition toPosition;
     private GeoPosition fromPosition;
-    private ArrayList<Station> resultStations = new ArrayList<>();
     public CitibikeFrame() {
-        RoutePainter routePainter = new RoutePainter();
-        WaypointPainter<Waypoint> waypointPainter = new WaypointPainter<>();
+
         CitibikeComponent mapViewer = new CitibikeComponent();
         controller = new CitibikeController(mapViewer);
 
@@ -77,20 +71,33 @@ public class CitibikeFrame extends JFrame {
 
                 isToPoint = !isToPoint;
                 controller.setPoints(toPosition, fromPosition);
+                mapViewer.updateWayPoints(
+                        toPosition,
+                        fromPosition,
+                        controller.getStartStation(),
+                        controller.getEndStation());
+                mapViewer.getMapViewer().repaint();
             }
         });
 
         mapButton.addActionListener(e -> {
             if (toPosition != null && fromPosition != null) {
-                resultStations = controller.findClosestStations();
-                mapViewer.drawRoutes(routePainter, waypointPainter);
+                controller.findClosestStations();
+
+                mapViewer.drawRoutes(
+                        toPosition,
+                        fromPosition,
+                        controller.getStartStation(),
+                        controller.getEndStation());
+
                 mapViewer.getMapViewer().zoomToBestFit(
                         Set.of(fromPosition,
-                                controller.getStationGeoPosition(resultStations.get(0)),
-                                controller.getStationGeoPosition(resultStations.get(1)),
+                                controller.getStartStation(),
+                                controller.getEndStation(),
                                 toPosition),
                         1.0
                 );
+
                 mapViewer.getMapViewer().repaint();
             } else {
                 JOptionPane.showMessageDialog(null, "Please select both 'To' and 'From' points.");
@@ -104,6 +111,11 @@ public class CitibikeFrame extends JFrame {
             toLabel.setText("To: ");
             fromLabel.setText("From: ");
             controller.clearPoints();
+            mapViewer.updateWayPoints(
+                    toPosition,
+                    fromPosition,
+                    controller.getStartStation(),
+                    controller.getEndStation());
             mapViewer.getMapViewer().setOverlayPainter(null);
             mapViewer.getMapViewer().repaint();
         });

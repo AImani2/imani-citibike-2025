@@ -18,10 +18,8 @@ public class CitibikeController {
     private GeoPosition fromPoint;
     private CitibikeRequestHandler.Location fromLocation;
     private CitibikeRequestHandler.Location toLocation;
-    private ArrayList<Station> resultStations = new ArrayList<>();
-    private Station startStation;
-    private Station endStation;
-    private GeoPosition stationGeo;
+    private GeoPosition startStation;
+    private GeoPosition endStation;
 
     public CitibikeController(CitibikeComponent citibikeComponent) {
         this.citibikeComponent = citibikeComponent;
@@ -37,7 +35,7 @@ public class CitibikeController {
         fromPoint = null;
     }
 
-    public ArrayList<Station> findClosestStations() {
+    public void findClosestStations() {
 
         fromLocation = new CitibikeRequestHandler.Location(fromPoint.getLatitude(), fromPoint.getLongitude());
         toLocation = new CitibikeRequestHandler.Location(toPoint.getLatitude(), toPoint.getLongitude());
@@ -49,19 +47,24 @@ public class CitibikeController {
                 .observeOn(SwingSchedulers.edt())
                 .subscribe(
                         response -> {
-                            endStation = response.end();
-                            startStation = response.start();
+                            if (response.start() != null && response.end() != null) {
+                                endStation = new GeoPosition(response.end().lat, response.end().lon);
+                                startStation = new GeoPosition(response.start().lat, response.start().lon);
+                            }
+                            // these are null
+                            // does this have to do with the lambda?
                         },
                         Throwable::printStackTrace
                 );
-        resultStations.set(0, startStation);
-        resultStations.set(1, endStation);
-        return resultStations;
     }
 
-    public GeoPosition getStationGeoPosition(Station station) {
-        stationGeo = new GeoPosition(station.lat, station.lon);
-        return stationGeo;
+    public GeoPosition getStartStation() {
+        return startStation;
     }
+
+    public GeoPosition getEndStation() {
+        return endStation;
+    }
+
 
 }
