@@ -20,12 +20,12 @@ import java.util.List;
 import java.util.Set;
 
 public class CitibikeComponent extends JComponent {
+
     private final JXMapViewer mapViewer;
     private Set<Waypoint> waypoints;
     private RoutePainter routePainter = new RoutePainter();
     private WaypointPainter<Waypoint> waypointPainter = new WaypointPainter<>();
     private final List<GeoPosition> wayPointLocations = new ArrayList<>();
-
 
     public CitibikeComponent() {
         mapViewer = new JXMapViewer();

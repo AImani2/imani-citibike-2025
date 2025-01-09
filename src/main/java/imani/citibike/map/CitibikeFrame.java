@@ -17,6 +17,7 @@ public class CitibikeFrame extends JFrame {
     private boolean isToPoint = true;
     private GeoPosition toPosition;
     private GeoPosition fromPosition;
+
     public CitibikeFrame() {
 
         CitibikeComponent mapViewer = new CitibikeComponent();
