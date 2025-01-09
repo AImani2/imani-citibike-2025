@@ -32,7 +32,7 @@ public class CitibikeRequestHandler
         StationUpdaterService sus = new StationUpdaterService(citibikeService);
         sus.updateStationListWithStatus(stationList);
 
-        StationLocator stationLocator = new StationLocator(sus, citibikeService);
+        StationLocator stationLocator = new StationLocator();
         Station startStation = stationLocator.findClosestStation(
                 request.from.lon,
                 request.from.lat,

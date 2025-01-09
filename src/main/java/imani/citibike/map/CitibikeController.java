@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CitibikeController {
-    private CitibikeComponent citibikeComponent;
+    private CitibikeComponent citibikeComponent; // can i take this out or i need to update my view from here?
     private GeoPosition toPoint;
     private GeoPosition fromPoint;
     private CitibikeRequestHandler.Location fromLocation;

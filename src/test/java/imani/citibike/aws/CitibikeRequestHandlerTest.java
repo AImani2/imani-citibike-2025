@@ -12,10 +12,18 @@ class CitibikeRequestHandlerTest {
     @Test
     void handleRequest() {
         //given
-        String body = "{\n" + "\n" + "  \"from\": {\n" + "\n" + "    \"lat\": 40.8211,\n" + "\n"
-                + "    \"lon\": -73.9359\n" + "\n" + "  },\n" + "\n" + "  \"to\": {\n"
-                + "\n" + "    \"lat\": 40.7190,\n" + "\n" + "    \"lon\": -73.9585\n"
-                + "\n" + "  }\n" + "\n" + "}";
+        String body = """
+    {
+      "from": {
+        "lat": 40.8211,
+        "lon": -73.9359
+      },
+      "to": {
+        "lat": 40.7190,
+        "lon": -73.9585
+      }
+    }
+    """;
 
         Context context = mock(Context.class);
         APIGatewayProxyRequestEvent event = mock(APIGatewayProxyRequestEvent.class);

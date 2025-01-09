@@ -8,12 +8,7 @@ import java.util.ArrayList;
 public class StationLocator {
     private ArrayList<Station> stationList = new ArrayList<>();
 
-    private CitibikeService citibikeService;
-    private StationUpdaterService stationUpdaterService;
-
-    public StationLocator(StationUpdaterService stationUpdaterService, CitibikeService citibikeService) {
-        this.stationUpdaterService = stationUpdaterService;
-        this.citibikeService = citibikeService;
+    public StationLocator() {
     }
 
     public Station findClosestStation(double lon, double lat, boolean isBikeSearch, StationUpdaterService sus) {
