@@ -39,7 +39,8 @@ public class CitibikeController {
 
         fromLocation = new CitibikeRequestHandler.Location(fromPoint.getLatitude(), fromPoint.getLongitude());
         toLocation = new CitibikeRequestHandler.Location(toPoint.getLatitude(), toPoint.getLongitude());
-        CitibikeRequestHandler.CitiBikeRequest request = new CitibikeRequestHandler.CitiBikeRequest(fromLocation, toLocation);
+        CitibikeRequestHandler.CitiBikeRequest request
+                = new CitibikeRequestHandler.CitiBikeRequest(fromLocation, toLocation);
 
         LambdaService lambdaService = new LambdaServiceFactory().getService();
         Disposable disposable = lambdaService.getLambda(request)
