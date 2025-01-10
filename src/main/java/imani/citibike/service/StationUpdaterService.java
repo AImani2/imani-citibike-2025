@@ -18,8 +18,6 @@ public class StationUpdaterService {
     }
 
     public void updateStationListWithStatus(ArrayList<Station> stationList) {
-        /*var stationInfoResponse = citibikeService.getStationInfoResponse()
-                .blockingGet();*/
 
         Stations stations = stationsCache.getStations();
 

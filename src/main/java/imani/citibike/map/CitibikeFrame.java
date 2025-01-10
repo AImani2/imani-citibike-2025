@@ -19,9 +19,9 @@ public class CitibikeFrame extends JFrame {
     private GeoPosition fromPosition;
 
     public CitibikeFrame() {
-
+        LambdaService lambdaService = new LambdaServiceFactory().getService();
         CitibikeComponent mapViewer = new CitibikeComponent();
-        controller = new CitibikeController();
+        controller = new CitibikeController(lambdaService);
 
         setLayout(new BorderLayout());
         getContentPane().add(mapViewer, BorderLayout.CENTER);
@@ -84,8 +84,7 @@ public class CitibikeFrame extends JFrame {
 
         mapButton.addActionListener(e -> {
             if (toPosition != null && fromPosition != null) {
-                LambdaService lambdaService = new LambdaServiceFactory().getService();
-                controller.findClosestStations(lambdaService);
+                controller.findClosestStations();
 
                 mapViewer.drawRoutes(
                         fromPosition,
