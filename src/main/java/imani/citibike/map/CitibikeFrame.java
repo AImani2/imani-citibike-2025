@@ -20,15 +20,15 @@ public class CitibikeFrame extends JFrame {
 
     public CitibikeFrame() {
 
-        LambdaService lambdaService = new LambdaServiceFactory().getService();
         CitibikeComponent mapViewer = new CitibikeComponent();
         controller = new CitibikeController();
 
+        setLayout(new BorderLayout());
+        getContentPane().add(mapViewer, BorderLayout.CENTER);
         setTitle("Citibike Map");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new BorderLayout());
-        getContentPane().add(mapViewer, BorderLayout.CENTER);
+
 
         JPanel buttonPanel = new JPanel();
 
@@ -84,6 +84,7 @@ public class CitibikeFrame extends JFrame {
 
         mapButton.addActionListener(e -> {
             if (toPosition != null && fromPosition != null) {
+                LambdaService lambdaService = new LambdaServiceFactory().getService();
                 controller.findClosestStations(lambdaService);
 
                 mapViewer.drawRoutes(

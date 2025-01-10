@@ -22,8 +22,10 @@ public class StationsCache {
     S3Client s3Client;
     private Instant lastModified;
     private final Gson gson = new Gson();
+    //CHECKSTYLE:OFF
     private final String BUCKET = "imani.citibike";
     private final String KEY = "request.json";
+    //CHECKSTYLE:ON
     private Stations stations;
     private final CitibikeService citibikeService;
 
@@ -38,7 +40,7 @@ public class StationsCache {
     // proper update
     public Stations getStations() {
         boolean moreThanOneHour = getAgeS3();
-        if (!moreThanOneHour && stations != null){
+        if (!moreThanOneHour && stations != null) {
             return stations;
         } else if (stations != null && moreThanOneHour) {
             stations = citibikeService.getStationInfoResponse().blockingGet();
