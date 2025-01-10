@@ -19,7 +19,7 @@ public class CitibikeController {
     private LambdaService lambdaService;
 
     public CitibikeController(LambdaService lambdaService) {
-        this.lambdaService = new LambdaServiceFactory().getService();
+        this.lambdaService = lambdaService;
     }
 
     public void setPoints(GeoPosition toPosition, GeoPosition fromPosition) {
