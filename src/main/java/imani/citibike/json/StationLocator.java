@@ -13,7 +13,7 @@ public class StationLocator {
         Station closestStation = null;
         double minDistance = Double.MAX_VALUE;
 
-        sus.updateStationListWithStatus(stationList);
+        stationList = sus.updateStationListWithStatus();
 
         for (Station station : stationList) {
             double currDistance = Math.sqrt((lat - station.lat) * (lat - station.lat))

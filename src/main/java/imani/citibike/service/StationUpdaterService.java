@@ -17,8 +17,8 @@ public class StationUpdaterService {
         this.stationsCache = stationsCache;
     }
 
-    public void updateStationListWithStatus(ArrayList<Station> stationList) {
-
+    public ArrayList<Station> updateStationListWithStatus() {
+        ArrayList<Station> stationList = new ArrayList<>();
         Stations stations = stationsCache.getStations();
 
         var stationStatusResponse = citibikeService.getStationStatusResponse()
@@ -38,6 +38,7 @@ public class StationUpdaterService {
 
         stationList.clear();
         stationList.addAll(stations.data.stations);
+        return stationList;
     }
 }
 
