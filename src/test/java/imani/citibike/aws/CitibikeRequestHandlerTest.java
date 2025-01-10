@@ -3,6 +3,9 @@ package imani.citibike.aws;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import org.junit.jupiter.api.Test;
 import com.amazonaws.services.lambda.runtime.Context;
+
+import java.sql.SQLOutput;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -11,7 +14,7 @@ class CitibikeRequestHandlerTest {
 
     @Test
     void handleRequest() {
-        try{
+        try {
             //given
             String body = """
     {
