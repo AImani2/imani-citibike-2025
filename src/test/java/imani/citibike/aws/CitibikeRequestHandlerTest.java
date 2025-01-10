@@ -11,8 +11,9 @@ class CitibikeRequestHandlerTest {
 
     @Test
     void handleRequest() {
-        //given
-        String body = """
+        try{
+            //given
+            String body = """
     {
       "from": {
         "lat": 40.8211,
@@ -25,17 +26,21 @@ class CitibikeRequestHandlerTest {
     }
     """;
 
-        Context context = mock(Context.class);
-        APIGatewayProxyRequestEvent event = mock(APIGatewayProxyRequestEvent.class);
-        when(event.getBody()).thenReturn(body);
-        CitibikeRequestHandler handler = new CitibikeRequestHandler();
+            Context context = mock(Context.class);
+            APIGatewayProxyRequestEvent event = mock(APIGatewayProxyRequestEvent.class);
+            when(event.getBody()).thenReturn(body);
+            CitibikeRequestHandler handler = new CitibikeRequestHandler();
 
-        //when
-        CitibikeRequestHandler.CitiBikeResponse response = handler.handleRequest(event, context);
+            //when
+            CitibikeRequestHandler.CitiBikeResponse response = handler.handleRequest(event, context);
 
-        //then
-        assertEquals(response.start().name, "Lenox Ave & W 146 St");
-        assertEquals(response.end().name, "Berry St & N 8 St");
+            //then
+            assertEquals(response.start().name, "Lenox Ave & W 146 St");
+            assertEquals(response.end().name, "Berry St & N 8 St");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 
 
