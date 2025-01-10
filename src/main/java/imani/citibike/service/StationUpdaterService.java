@@ -11,6 +11,7 @@ import java.util.List;
 public class StationUpdaterService {
     private final CitibikeService citibikeService;
     private final StationsCache stationsCache;
+    private Stations stations;
 
     public StationUpdaterService(CitibikeService citibikeService, StationsCache stationsCache) {
         this.citibikeService = citibikeService;
@@ -19,7 +20,12 @@ public class StationUpdaterService {
 
     public ArrayList<Station> updateStationListWithStatus() {
         ArrayList<Station> stationList = new ArrayList<>();
-        Stations stations = stationsCache.getStations();
+
+        try {
+            stations = stationsCache.getStations();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
         var stationStatusResponse = citibikeService.getStationStatusResponse()
                 .blockingGet();

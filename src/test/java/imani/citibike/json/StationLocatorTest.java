@@ -11,35 +11,35 @@ public class StationLocatorTest {
 
     @Test
     public void findClosestPickUpStation() {
-        try {
             //given
             StationsCache stationsCache = new StationsCache();
             CitibikeService citibikeService = new CitibikeServiceFactory().getService();
             StationUpdaterService sus = new StationUpdaterService(citibikeService, stationsCache);
             StationLocator stationLocator = new StationLocator();
 
-            //when
-            Station startStation = stationLocator.findClosestStation(-73.9359, 40.8211, true, sus);
+            try {
+                //when
+                Station startStation = stationLocator.findClosestStation(-73.9359, 40.8211, true, sus);
 
-            //then
-            assertNotNull(startStation);
-            assertTrue(startStation.num_bikes_available > 0);
-            assertEquals("Lenox Ave & W 146 St", startStation.name);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+                //then
+                assertNotNull(startStation);
+                assertTrue(startStation.num_bikes_available > 0);
+                assertEquals("Lenox Ave & W 146 St", startStation.name);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+
     }
 
     @Test
     public void findClosestDockingStation() {
         //given
+        StationsCache stationsCache = new StationsCache();
+        CitibikeService citibikeService = new CitibikeServiceFactory().getService();
+        StationUpdaterService sus = new StationUpdaterService(citibikeService, stationsCache);
+        StationLocator stationLocator = new StationLocator();
+
         try {
-            StationsCache stationsCache = new StationsCache();
-            CitibikeService citibikeService = new CitibikeServiceFactory().getService();
-            StationUpdaterService sus = new StationUpdaterService(citibikeService, stationsCache);
-
-            StationLocator stationLocator = new StationLocator();
-
             //when
             Station endStation = stationLocator.findClosestStation(-73.9585, 40.7190, true, sus);
 
