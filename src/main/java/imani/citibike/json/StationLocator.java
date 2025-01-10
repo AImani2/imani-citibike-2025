@@ -25,7 +25,6 @@ public class StationLocator {
                 minDistance = currDistance;
                 closestStation = station;
             }
-
         }
         return closestStation;
     }

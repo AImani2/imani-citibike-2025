@@ -6,6 +6,7 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.google.gson.Gson;
 import imani.citibike.json.Station;
 import imani.citibike.json.StationLocator;
+import imani.citibike.json.StationsCache;
 import imani.citibike.service.CitibikeService;
 import imani.citibike.service.CitibikeServiceFactory;
 import imani.citibike.service.StationUpdaterService;
@@ -20,6 +21,7 @@ public class CitibikeRequestHandler
     private final CitibikeService citibikeService = new CitibikeServiceFactory().getService();
     private final CitibikeServiceFactory citibikeServiceFactory = new CitibikeServiceFactory();
     private final Gson gson = new Gson();
+    private final StationsCache stationsCache = new StationsCache();
 
     @Override
     public CitiBikeResponse handleRequest(APIGatewayProxyRequestEvent event, Context context) {
@@ -29,7 +31,7 @@ public class CitibikeRequestHandler
         citibikeServiceFactory.getService();
 
         ArrayList<Station> stationList = new ArrayList<>();
-        StationUpdaterService sus = new StationUpdaterService(citibikeService);
+        StationUpdaterService sus = new StationUpdaterService(citibikeService, stationsCache);
         sus.updateStationListWithStatus(stationList);
 
         StationLocator stationLocator = new StationLocator();

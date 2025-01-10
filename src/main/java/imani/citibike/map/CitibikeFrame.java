@@ -22,7 +22,7 @@ public class CitibikeFrame extends JFrame {
 
         LambdaService lambdaService = new LambdaServiceFactory().getService();
         CitibikeComponent mapViewer = new CitibikeComponent();
-        controller = new CitibikeController(mapViewer);
+        controller = new CitibikeController();
 
         setTitle("Citibike Map");
         setSize(800, 600);

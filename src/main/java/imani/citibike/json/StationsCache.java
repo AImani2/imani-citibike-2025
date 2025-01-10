@@ -47,7 +47,7 @@ public class StationsCache {
 
         } else if (stations == null && !moreThanOneHour) {
             readS3();
-            // update last modified to last modified from s3
+            lastModified = Instant.now();
         } else if (stations == null && moreThanOneHour) {
             stations = citibikeService.getStationInfoResponse().blockingGet();
             lastModified = Instant.now();
@@ -95,5 +95,3 @@ public class StationsCache {
     }
 
 }
-
-// where and how am I going to call this class?
